@@ -108,11 +108,11 @@
 			if (e.shiftKey) {
 				let inBetween = false
 				checkboxes.forEach(checkbox => {
-					if (checkbox === this || checkbox === prevCheckbox) {
-						inBetween = !inBetween
-					}
 					if (inBetween) {
 						checkbox.checked = prevCheckboxValue
+					}
+					if (checkbox === this || checkbox === prevCheckbox) {
+						inBetween = !inBetween
 					}
 				})
 			} else {
