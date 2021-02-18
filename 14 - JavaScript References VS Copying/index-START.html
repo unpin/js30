@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>JS Reference VS Copy</title>
+</head>
+
+<body>
+
+	<script>
+		// start with strings, numbers and booleans
+
+		// Let's say we have an array
+		const players = ['German', 'James', 'Li', 'Jane'];
+
+		// and we want to make a copy of it.
+
+		// You might think we can just do something like this:
+		const playersCopy = players;
+		// however what happens when we update that array?
+		playersCopy[0] = 'Dan'
+		// now here is the problem!
+		console.log(players);
+		console.log(playersCopy);
+		// oh no - we have edited the original array too!
+
+		// Why? It's because that is an array reference, not an array copy. They both point to the same array!
+
+		// So, how do we fix this? We take a copy instead!
+
+		// one way
+		const copyArr = players.slice()
+		// or create a new array and concat the old one in
+		const concatArr = [].concat(players)
+		console.log(concatArr)
+		// or use the new ES6 Spread
+		const spreadArr = [...players]
+		const copyFrom = Array.from(players)
+		// now when we update it, the original one isn't changed
+
+		// The same thing goes for objects, let's say we have a person object
+
+		// with Objects
+		const person = {
+			name: 'German',
+			age: 20,
+			social: {
+				twitter: "@germancss",
+				github: "@unpin"
+			}
+		};
+
+		// and think we make a copy:
+		const personRef = person
+		// how do we take a copy instead?
+		const objCopy = Object.assign({}, person, { age: 27 })
+		console.log(person);
+		console.log(objCopy);
+		// We will hopefully soon see the object ...spread
+		// Note: Object spread was added with the release of ECMAScript 2018
+		const spreadObj = { ...person }
+		console.log(spreadObj);
+		// Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+		const shallowCopy = Object.assign({}, person)
+		console.log("Shallow copying");
+		shallowCopy.social.github = "bilaloff"
+		console.log(shallowCopy.social);
+		console.log(person.social);
+		// JSON Copying Trick AKA "Poor man's deep clone"
+		console.log("Deep copying");
+		const deepCopy = JSON.parse(JSON.stringify(person))
+		deepCopy.name = 'Jack'
+		deepCopy.age = 35
+		deepCopy.social.github = 'jacklondon'
+		console.log(person);
+		console.log(deepCopy);
+
+	</script>
+
+</body>
+
+</html>
